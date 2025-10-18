@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package user;
+
+option java_multiple_files = true;
+option java_package = "echochat.userservice.grpc";
+option java_outer_classname = "UserGRPC";
+
+service UserService {
+  rpc GetDisplayName(GetDisplayNameRequest) returns (DisplayName);
+}
+
+message GetDisplayNameRequest {
+  string userId = 1;
+}
+
+message DisplayName {
+  string displayName = 1;
+}
