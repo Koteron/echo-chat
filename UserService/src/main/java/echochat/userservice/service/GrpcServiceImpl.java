@@ -1,7 +1,7 @@
 package echochat.userservice.service;
 
 
-import echochat.userservice.grpc.DisplayName;
+import echochat.userservice.grpc.DisplayNames;
 import echochat.userservice.grpc.GetDisplayNameRequest;
 import echochat.userservice.grpc.UserServiceGrpc;
 import io.grpc.stub.StreamObserver;
@@ -17,9 +17,10 @@ public class GrpcServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     private final UserService userService;
 
     @Override
-    public void getDisplayName(GetDisplayNameRequest request, StreamObserver<DisplayName> responseObserver) {
-        DisplayName displayName = DisplayName.newBuilder()
-                .setDisplayName(userService.getDisplayName(UUID.fromString(request.getUserId())))
+    public void getDisplayName(GetDisplayNameRequest request, StreamObserver<DisplayNames> responseObserver) {
+        DisplayNames displayName = DisplayNames.newBuilder()
+                .addAllDisplayName(userService.getDisplayNames(request.getUserIdList().stream()
+                        .map(UUID::fromString).toList()))
                 .build();
 
         responseObserver.onNext(displayName);

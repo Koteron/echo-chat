@@ -4,7 +4,10 @@ import echochat.userservice.dto.UserCreateDto;
 import echochat.userservice.dto.UserDisplayInfoDto;
 import echochat.userservice.dto.UserFullInfoDto;
 import echochat.userservice.dto.UserUpdateDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
@@ -13,5 +16,6 @@ public interface UserService {
     UserFullInfoDto update(UserUpdateDto userUpdateDto);
     UserFullInfoDto getFullInfo(UUID id);
     UserDisplayInfoDto getDisplayInfo(UUID id);
-    String getDisplayName(UUID id);
+    List<String> getDisplayNames(List<UUID> ids);
+    Page<UserDisplayInfoDto> searchDisplayInfos(String nameSearchString, Pageable pageable);
 }

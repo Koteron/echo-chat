@@ -6,14 +6,16 @@ option java_multiple_files = true;
 option java_package = "echochat.userservice.grpc";
 option java_outer_classname = "UserGRPC";
 
+option go_package = "ChatService/UserService;UserService";
+
 service UserService {
-  rpc GetDisplayName(GetDisplayNameRequest) returns (DisplayName);
+  rpc GetDisplayName(GetDisplayNameRequest) returns (DisplayNames);
 }
 
 message GetDisplayNameRequest {
-  string userId = 1;
+  repeated string userId = 1;
 }
 
-message DisplayName {
-  string displayName = 1;
+message DisplayNames {
+  repeated string displayName = 1;
 }

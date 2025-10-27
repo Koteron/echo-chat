@@ -26,6 +26,9 @@ public class User {
 
     private String bio;
 
+    @Column(name="is_public")
+    private boolean isPublic;
+
     @Column(nullable = false, name = "created_at")
     private LocalDateTime createdAt;
 

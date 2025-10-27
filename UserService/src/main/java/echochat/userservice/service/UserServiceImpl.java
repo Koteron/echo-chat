@@ -9,9 +9,13 @@ import echochat.userservice.exception.NotFoundException;
 import echochat.userservice.mapper.UserMapper;
 import echochat.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -60,9 +64,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getDisplayName(UUID id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User not found!"))
-                .getDisplayName();
+    public List<String> getDisplayNames(List<UUID> ids) {
+        return userRepository.findAllById(ids).stream().map(User::getDisplayName).toList();
+    }
+
+    @Override
+    public Page<UserDisplayInfoDto> searchDisplayInfos(String nameSearchString, Pageable pageable) {
+        return userRepository.searchByNameSimilar(nameSearchString, pageable)
+                .map(userMapper::toUserDisplayInfoDto);
     }
 }

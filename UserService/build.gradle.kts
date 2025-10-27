@@ -6,7 +6,7 @@ plugins {
 	id("com.google.protobuf") version "0.9.4"
 }
 
-group = "koteron"
+group = "echochat"
 version = "0.0.1-SNAPSHOT"
 description = "UserService"
 

@@ -6,6 +6,10 @@ import echochat.userservice.dto.UserFullInfoDto;
 import echochat.userservice.dto.UserUpdateDto;
 import echochat.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -39,5 +43,15 @@ public class UserController {
     @PatchMapping("/update")
     public UserFullInfoDto update(@RequestBody UserUpdateDto userUpdateDto) {
         return userService.update(userUpdateDto);
+    }
+
+    @GetMapping("/search")
+    public Page<UserDisplayInfoDto> search(
+            @RequestParam(name = "name")
+            String name,
+
+            @PageableDefault(size = 20)
+            Pageable pageable) {
+        return userService.searchDisplayInfos(name, pageable);
     }
 }
